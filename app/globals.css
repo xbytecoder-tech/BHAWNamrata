@@ -1,0 +1,27 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Base surface tuning for muted dark-professional UI */
+html {
+  background-color: #fffaf2;
+}
+
+html.dark {
+  background-color: #020617;
+}
+
+body {
+  background-color: #fffaf2;
+  background-image:
+    radial-gradient(circle at 84% 12%, rgba(251, 191, 36, 0.14), transparent 42%),
+    radial-gradient(circle at 12% 18%, rgba(14, 165, 233, 0.12), transparent 38%),
+    linear-gradient(180deg, #fffaf2 0%, #f8fafc 58%, #f1f5f9 100%);
+}
+
+.dark body {
+  background-color: #020617;
+  background-image:
+    radial-gradient(circle at 84% 12%, rgba(251, 191, 36, 0.09), transparent 40%),
+    radial-gradient(circle at 12% 18%, rgba(14, 165, 233, 0.08), transparent 36%),
+    linear-gradient(180deg, #020617 0%, #0b1120 55%, #111827 100%);
+}
