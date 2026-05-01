@@ -4,6 +4,7 @@ import { BackgroundCarousel } from "../components/BackgroundCarousel";
 import { BrowserChromeController } from "../components/BrowserChromeController";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
+import { fetchLatestBhawVideoIds } from "../lib/youtube";
 
 export const metadata: Metadata = {
   title: "BHAW Namrata | Podcast Booking Experience",
@@ -23,11 +24,13 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const latestVideoIds = await fetchLatestBhawVideoIds();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -43,7 +46,7 @@ export default function RootLayout({
           <BrowserChromeController />
 
           {/* Podcast-style ambient background carousel */}
-          <BackgroundCarousel />
+          <BackgroundCarousel initialVideoIds={latestVideoIds} />
 
           {/* Shared top navigation */}
           <Navbar />

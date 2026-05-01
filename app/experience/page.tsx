@@ -1,43 +1,26 @@
-﻿import Link from "next/link";
-
-const packages = [
-  {
-    name: "Authority Spotlight",
-    price: "Rs 35,000",
-    idealFor: "Women in second innings scaling visibility",
-    deliverables: ["Brand narrative refinement", "12 premium podcast pitch submissions", "Mock interview coaching"],
-  },
-  {
-    name: "Growth Spotlight",
-    price: "Rs 25,000",
-    idealFor: "Entrepreneurs building authority",
-    deliverables: ["Storyline strategy call", "6 podcast pitch submissions", "Host-specific talking points"],
-  },
-
-  {
-    name: "Starter Spotlight",
-    price: "Rs 10,000",
-    idealFor: "First-time podcast guests",
-    deliverables: ["Women centric", "Businesses < 2 yrs", "2 promotional reels", "40-60 mins podcast"],
-  }
-];
+import Link from "next/link";
+import { packageOptions } from "../../lib/packages";
 
 export default function ExperiencePage() {
   return (
     <section aria-labelledby="packages-heading">
       {/* Page header */}
       <div className="max-w-3xl rounded-2xl border border-white/85 bg-white/86 p-5 shadow-md shadow-stone-200/45 dark:border-slate-700/70 dark:bg-slate-900/55 dark:shadow-black/15 sm:p-6">
-        <h1 id="packages-heading" className="text-2xl font-bold text-stone-900 dark:text-slate-100 sm:text-3xl lg:text-4xl">
+        <h1
+          id="packages-heading"
+          className="text-2xl font-bold text-stone-900 dark:text-slate-100 sm:text-3xl lg:text-4xl"
+        >
           Choose your podcast booking experience
         </h1>
         <p className="mt-3 text-sm text-stone-700 dark:text-slate-300 sm:mt-4 sm:text-base">
-          Each tier is built to meet you where you are and guide you toward confident, story-driven visibility.
+          Each tier is built to meet you where you are and guide you toward
+          confident, story-driven visibility.
         </p>
       </div>
 
       {/* Package cards */}
       <div className="mt-8 grid gap-5 sm:mt-10 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {packages.map((pkg, index) => (
+        {packageOptions.map((pkg, index) => (
           <article
             key={pkg.name}
             className="group flex h-full flex-col rounded-2xl border border-white/85 bg-gradient-to-br from-white/90 to-slate-50/85 p-5 shadow-md shadow-stone-200/50 transition hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-700/70 dark:from-slate-900/68 dark:to-slate-900/52 dark:shadow-black/20 sm:p-6"
@@ -45,9 +28,15 @@ export default function ExperiencePage() {
             <p className="inline-flex w-fit rounded-full bg-stone-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-stone-600 dark:bg-slate-800 dark:text-slate-300">
               Tier {index + 1}
             </p>
-            <h2 className="text-xl font-semibold text-stone-900 dark:text-slate-100">{pkg.name}</h2>
-            <p className="mt-1 text-2xl font-bold text-stone-800 dark:text-slate-100">{pkg.price}</p>
-            <p className="mt-2 text-sm text-stone-600 dark:text-slate-300">Ideal for: {pkg.idealFor}</p>
+            <h2 className="text-xl font-semibold text-stone-900 dark:text-slate-100">
+              {pkg.name}
+            </h2>
+            <p className="mt-1 text-2xl font-bold text-stone-800 dark:text-slate-100">
+              {pkg.amount}
+            </p>
+            <p className="mt-2 text-sm text-stone-600 dark:text-slate-300">
+              Ideal for: {pkg.idealFor}
+            </p>
 
             <ul className="mt-5 space-y-2 text-sm text-stone-700 dark:text-slate-300">
               {pkg.deliverables.map((item) => (
