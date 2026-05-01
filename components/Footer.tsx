@@ -1,10 +1,26 @@
 export function Footer() {
   // Update these URLs if official handles change.
   const socialLinks = [
-    { label: "YouTube", href: "https://www.youtube.com/@BHAWNamrata" },
-    { label: "Instagram", href: "https://www.instagram.com/bhawnamrata/" },
-    { label: "Facebook", href: "https://www.facebook.com/bhawnamrata/" },
-    { label: "WhatsApp", href: "https://wa.me/919243122115" },
+    {
+      label: "YouTube",
+      href: "https://www.youtube.com/@BHAWNamrata",
+      logo: "https://img.icons8.com/color/48/youtube-play.png",
+    },
+    {
+      label: "Instagram",
+      href: "https://www.instagram.com/bhawnamrata/",
+      logo: "https://img.icons8.com/color/48/instagram-new.png",
+    },
+    {
+      label: "Facebook",
+      href: "https://www.facebook.com/bhawnamrata/",
+      logo: "https://img.icons8.com/color/48/facebook-new.png",
+    },
+    {
+      label: "WhatsApp",
+      href: "https://wa.me/919243122115",
+      logo: "https://img.icons8.com/color/48/whatsapp--v1.png",
+    },
   ];
 
   return (
@@ -19,16 +35,23 @@ export function Footer() {
           <p className="text-xs font-semibold uppercase tracking-wide text-stone-700 dark:text-slate-300">
             Follow Us
           </p>
-          <div className="mt-2 flex flex-wrap gap-2">
+          <div className="mt-2 flex flex-wrap gap-3">
             {socialLinks.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-stone-300 bg-white/80 px-3 py-1 text-xs font-medium text-stone-700 transition hover:border-stone-500 hover:text-stone-900 dark:border-slate-600 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:border-slate-400 dark:hover:text-slate-100"
+                aria-label={item.label}
+                title={item.label}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-stone-300 bg-white/85 transition hover:border-stone-500 hover:bg-white dark:border-slate-600 dark:bg-slate-900/60 dark:hover:border-slate-400 dark:hover:bg-slate-900/85"
               >
-                {item.label}
+                <img
+                  src={item.logo}
+                  alt={item.label}
+                  className="h-6 w-6 object-contain"
+                />
+                <span className="sr-only">{item.label}</span>
               </a>
             ))}
           </div>

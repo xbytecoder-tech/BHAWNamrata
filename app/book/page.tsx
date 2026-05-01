@@ -1,14 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-
-const packageOptions = [
-  { name: "Starter Spark", amount: "Rs 16,500" },
-  { name: "Growth Voice", amount: "Rs 41,500" },
-  { name: "Legacy Spotlight", amount: "Rs 74,500" },
-];
+import { formatPackageValue, packageOptions } from "../../lib/packages";
 
 const BOOKING_DRAFT_KEY = "bhaw_booking_draft_v1";
+const validPackageValues = packageOptions.map((pkg) => formatPackageValue(pkg));
+const BOOKING_DAYS = new Set([3, 5]);
 
 function atMidnight(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -33,6 +30,10 @@ function toIsoDate(date: Date) {
   const m = String(date.getMonth() + 1).padStart(2, "0");
   const d = String(date.getDate()).padStart(2, "0");
   return `${y}-${m}-${d}`;
+}
+
+function isBookableDate(date: Date) {
+  return BOOKING_DAYS.has(date.getDay());
 }
 
 export default function BookPage() {
@@ -75,10 +76,21 @@ export default function BookPage() {
       setTopicTitle(saved.topicTitle ?? "");
       setTopicDescription(saved.topicDescription ?? "");
       setCouponCode(saved.couponCode ?? "");
-      setSelectedPackage(saved.selectedPackage ?? "");
+      const persistedPackage = saved.selectedPackage ?? "";
+      setSelectedPackage(
+        validPackageValues.includes(persistedPackage) ? persistedPackage : "",
+      );
 
       const persistedDate = saved.selectedDate ?? "";
-      if (persistedDate && persistedDate >= minDate) {
+      const persistedDateObject = persistedDate
+        ? new Date(`${persistedDate}T00:00:00`)
+        : null;
+      if (
+        persistedDate &&
+        persistedDate >= minDate &&
+        persistedDateObject &&
+        isBookableDate(persistedDateObject)
+      ) {
         setSelectedDate(persistedDate);
         const [year, month] = persistedDate.split("-");
         if (year && month) {
@@ -88,7 +100,7 @@ export default function BookPage() {
     } catch {
       // Ignore corrupted draft data.
     }
-  }, [minDate]);
+  }, [minDate, validPackageValues]);
 
   useEffect(() => {
     try {
@@ -136,7 +148,9 @@ export default function BookPage() {
     topicTitle.trim().length > 0 &&
     topicDescription.trim().length > 0 &&
     selectedPackage.trim().length > 0 &&
-    selectedDate.trim().length > 0;
+    selectedDate.trim().length > 0 &&
+    !!selectedDateObject &&
+    isBookableDate(selectedDateObject);
 
   const monthLabel = viewMonth.toLocaleDateString("en-US", {
     month: "long",
@@ -156,7 +170,7 @@ export default function BookPage() {
     for (let day = 1; day <= daysInMonth; day += 1) {
       const date = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), day);
       const iso = toIsoDate(date);
-      cells.push({ iso, day, disabled: iso < minDate });
+      cells.push({ iso, day, disabled: iso < minDate || !isBookableDate(date) });
     }
     return cells;
   }, [daysInMonth, minDate, monthStartWeekday, viewMonth]);
@@ -225,7 +239,7 @@ export default function BookPage() {
               Select a Package
               <div className="mt-2 grid grid-cols-3 gap-2">
                 {packageOptions.map((pkg) => {
-                  const packageValue = `${pkg.name} (${pkg.amount})`;
+                  const packageValue = formatPackageValue(pkg);
                   const isSelected = selectedPackage === packageValue;
                   return (
                     <button
@@ -304,7 +318,7 @@ export default function BookPage() {
             Choose your slot
           </h2>
           <p className="mt-2 text-sm text-stone-700 dark:text-slate-300">
-            Select a date first. Available times will appear below.
+            Bookings are available on Wednesdays and Fridays only.
           </p>
 
           <div className="mt-5 overflow-hidden rounded-xl border border-stone-200 bg-white p-4 shadow-sm dark:border-slate-600/80 dark:bg-slate-900/55 dark:shadow-black/25">
@@ -376,7 +390,7 @@ export default function BookPage() {
               {selectedDateLabel}
             </p>
             <p className="mt-2 text-sm text-stone-600 dark:text-slate-300">
-              Time slot will be assigned after confirmation.
+              We schedule recordings on Wednesdays and Fridays. Time slot will be assigned after confirmation.
             </p>
           </div>
         </aside>
