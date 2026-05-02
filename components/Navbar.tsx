@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import brandLogo from "../assets/BHAW_Logo.jpeg";
+import brandLogo from "../assets/BHAW_Na-Logo.jpeg";
 import { ThemeToggle } from "./ThemeToggle";
 
 export function Navbar() {
@@ -23,13 +23,16 @@ export function Navbar() {
         aria-label="Main navigation"
       >
         <Link href="/" className="inline-flex items-center gap-3" aria-label="BHAW Namrata Home">
-          <Image
-            src={brandLogo}
-            alt="BHAW Namrata"
-            className="h-14 w-auto object-contain sm:h-16"
-            priority
-          />
-          <span className="text-lg font-bold tracking-tight text-stone-900 sm:text-xl dark:text-slate-100">
+          <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border border-stone-200 bg-white shadow-sm shadow-stone-300/35 dark:border-slate-700 dark:bg-slate-900 dark:shadow-black/30 sm:h-16 sm:w-16">
+            <Image
+              src={brandLogo}
+              alt="BHAW Namrata"
+              fill
+              className="object-cover object-center"
+              priority
+            />
+          </span>
+          <span className="bg-gradient-to-r from-amber-700 via-amber-500 to-stone-900 bg-clip-text text-lg font-bold tracking-tight text-transparent dark:from-amber-200 dark:via-amber-300 dark:to-orange-100 sm:text-xl">
             BHAW Namrata
           </span>
         </Link>
@@ -48,6 +51,11 @@ export function Navbar() {
           <li>
             <Link href="/experience" className={navLinkClass("/experience")}>
               Experience
+            </Link>
+          </li>
+          <li>
+            <Link href="/portfolio" className={navLinkClass("/portfolio")}>
+              Portfolio
             </Link>
           </li>
           <li>

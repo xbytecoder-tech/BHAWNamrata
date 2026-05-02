@@ -10,6 +10,11 @@ export const metadata: Metadata = {
   title: "BHAW Namrata | Podcast Booking Experience",
   description:
     "Official podcast booking experience by and for BHAW Namrata (YouTube channel).",
+  icons: {
+    icon: "/bhaw-namrata-logo.jpeg?v=20260502",
+    shortcut: "/bhaw-namrata-logo.jpeg?v=20260502",
+    apple: "/bhaw-namrata-logo.jpeg?v=20260502",
+  },
 };
 
 // Explicit viewport metadata for consistent rendering across phones/tablets/laptops.
